@@ -1,4 +1,9 @@
 
+body {
+    width: 1000px;
+    margin: 10px auto;
+}
+
 .gender-label {
     background-color: cadetblue;
     color:beige;
@@ -24,7 +29,8 @@ label.gender-label.female span, #asdf#qwert {
 }
 
 #container div {
-    background-color:azure;
+    background-color: azure;
+    border: solid #c1eef1;
 }
 
 #container div:hover {
@@ -35,4 +41,16 @@ label.gender-label.female span, #asdf#qwert {
 
 #username:focus {
     background-color: bisque;
+}
+
+nav {
+    position: fixed;
+    right: 0px;
+    top: 50px;
+    background: #c7baba;
+    padding: 10px;
+    border: solid gray;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-right: 0px;
 }
