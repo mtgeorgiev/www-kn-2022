@@ -1,0 +1,38 @@
+
+.gender-label {
+    background-color: cadetblue;
+    color:beige;
+}
+
+label.gender-label {
+    padding: 10px;
+    background-color: rgb(160, 98, 95, 0.5);
+}
+
+#username {
+    background-color: aqua;
+    font-family: "Times New Roman", Verdana, Consolas, "Lucida Console", Arial
+}
+
+
+#username {
+    background-color:azure;
+}
+
+label.gender-label.female span, #asdf#qwert {
+    color: white;
+}
+
+#container div {
+    background-color:azure;
+}
+
+#container div:hover {
+    background-color: blue;
+    cursor: pointer;
+}
+
+
+#username:focus {
+    background-color: bisque;
+}
