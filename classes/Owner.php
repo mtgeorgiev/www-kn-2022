@@ -3,7 +3,7 @@
 /**
  * Pet owner entity class
  */
-class Owner {
+class Owner implements JsonSerializable {
 
     private $id;
 
@@ -17,7 +17,7 @@ class Owner {
 
     private $introText;
 
-    public function __construct($id, $username, $password, $introText) {
+    public function __construct(int $id, string $username, string $password, string $introText) {
 
         $this->id = $id;
         $this->username = $username;
@@ -25,8 +25,16 @@ class Owner {
         $this->introText = $introText;
     }
 
-    public function getIntroText() {
+    public function getIntroText(): string {
         return $this->introText;
     }
 
+    public function jsonSerialize(): array {
+        return [
+            'id' => $this->id,
+            'registeredOn' => $this->registeredOn,
+            'lastLogin' => $this->lastLoginOn,
+            'introText' => $this->introText,
+        ];
+    }
 }
