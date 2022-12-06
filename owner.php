@@ -11,7 +11,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     }
     case 'POST': {
-        $response = OwnerRequestHandler::post();
+        //$postData = json_decode(file_get_contents("php://input"));
+
+        $postData = $_POST;
+
+        $response = OwnerRequestHandler::post($postData);
         // insert
         break;
     }

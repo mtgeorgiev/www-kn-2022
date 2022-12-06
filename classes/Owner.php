@@ -32,6 +32,7 @@ class Owner implements JsonSerializable {
     public function jsonSerialize(): array {
         return [
             'id' => $this->id,
+            'username' => $this->username,
             'registeredOn' => $this->registeredOn,
             'lastLogin' => $this->lastLoginOn,
             'introText' => $this->introText,

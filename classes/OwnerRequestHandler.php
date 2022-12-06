@@ -20,17 +20,17 @@ class OwnerRequestHandler {
         }
 
         return [
-            new Owner(1, "sonic", "0000", "Обичам&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; таралежи &#10084;"),
+            new Owner(1, "sonic", "0000", "Обичам         таралежи ❤"),
             new Owner(2, "spiderman", "0000", "Спайдърмен е моят герой ❤"),
+            new Owner(3, "ел чупакабра", "0000", ""),
         ];
-
     }
 
     /**
      * Creates an owner object
      */
-    public static function post() {
-
+    public static function post(array $data): array {
+        return $data;
     }
 
     /**
