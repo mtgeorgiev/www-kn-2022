@@ -81,10 +81,6 @@ const loadOwners = () => {
         .then(displayOwners);
 }
 
-document.getElementById('see-owners').addEventListener('click', loadOwners);
-
-
-
 const sendPostRequest = (data) => {
     return fetch('./owner.php', {
         method: 'POST',
@@ -107,3 +103,25 @@ const sendPostRequestAsFormData = (data) => {
     })
     .then(response => response.json());
 }
+
+const showLoginForm = () => {
+    alert('login');
+    document.location.reload();
+}
+
+const checkLoginStatus = () => {
+    fetch('./session.php')
+        .then(r => r.json())
+        .then(response => {
+            if (response.logged) {
+                document.getElementById('sidebar').innerHTML = `Здравей, <span id="username">${response.username}</span>`;
+            } else {
+                document.getElementById('sidebar').innerHTML = `<button id="login">Влез в системата</button>`;
+                document.querySelector('#sidebar #login').addEventListener('click', showLoginForm);
+            }
+        });
+}
+
+document.getElementById('see-owners').addEventListener('click', loadOwners);
+
+checkLoginStatus();

@@ -6,7 +6,13 @@ AppBootstrap::startApp();
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET': {
-        $response = OwnerRequestHandler::get($_GET);
+
+        if (isset($_SESSION['username'])) {
+            $response = OwnerRequestHandler::get($_GET);
+        } else {
+            http_response_code(401);
+            $response = null;
+        }
         // read data
         break;
     }

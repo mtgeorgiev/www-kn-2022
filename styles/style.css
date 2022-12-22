@@ -54,3 +54,13 @@ nav {
     border-bottom-left-radius: 10px;
     border-right: 0px;
 }
+
+#content {
+    width: 80%;
+    float: left;
+}
+
+#sidebar {
+    width: 20%;
+    float: left;
+}

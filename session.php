@@ -4,22 +4,55 @@ require_once "./classes/AppBootstrap.php";
 
 AppBootstrap::startApp();
 
+session_start();
+
 $response = [];
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET': {
+
+        if (isset($_SESSION['username'])) {
+            $response = [
+                'logged' => true,
+                'username' => $_SESSION['username']
+            ];
+        } else {
+            $response = [
+                'logged' => false
+            ];
+        }
         // read data
         break;
     }
     case 'POST': {
-        //$postData = json_decode(file_get_contents("php://input"));
+        $sessionData = json_decode(file_get_contents("php://input"), true);
 
-        $postData = $_POST;
+        $username = $sessionData['username'];
+        $password = $sessionData['password'];
+
+        // magic trick here
+        $logged = true;
+
+        if ($logged) {
+
+            $_SESSION['username'] = $username;
+
+            $response = [
+                'logged' => true,
+                'username' => $username
+            ];
+        } else {
+            $response = [
+                'logged' => false
+            ];
+        }
+
+
         // insert
         break;
     }
     case 'DELETE': {
-        // delete
+        session_destroy();
         break;
     }
     default: {
