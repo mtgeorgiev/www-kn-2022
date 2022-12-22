@@ -15,15 +15,32 @@ class OwnerRequestHandler {
      */
     public static function get(array $params) {
 
+        $connection = (new Db())->getConnection();
+
         if (isset($params['id'])) {
-            return new Owner(1, "sonic", "0000", "Обичам таралежи");
+
+            $statement = $connection->prepare("SELECT * FROM `owners` WHERE id = :id");
+            $statement->execute(['id' => $params['id']]);
+            $dbRow = $statement->fetch();
+
+            if ($dbRow) {
+                return new Owner((int)$dbRow['id'], $dbRow['username'], $dbRow['password'], $dbRow['intro_text']);
+            }
+
+            return null;
         }
 
-        return [
-            new Owner(1, "sonic", "0000", "Обичам         таралежи ❤"),
-            new Owner(2, "spiderman", "0000", "Спайдърмен е моят герой ❤"),
-            new Owner(3, "ел чупакабра", "0000", ""),
-        ];
+        $statement = $connection->prepare("SELECT * FROM `owners`");
+        $statement->execute([]);
+
+        $owners = $statement->fetchAll();
+
+        for ($i = 0; $i < count($owners); $i ++) {
+            $owner = $owners[$i];
+            $result[] = new Owner((int)$owner['id'], $owner['username'], $owner['password'], $owner['intro_text']);
+        }
+
+        return $result;
     }
 
     /**
