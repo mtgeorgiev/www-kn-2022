@@ -5,7 +5,7 @@ require_once "./classes/AppBootstrap.php";
 AppBootstrap::startApp();
 
 switch ($_SERVER['REQUEST_METHOD']) {
-    case 'GET': {
+    case 'GET': { // get user(s)
 
         if (isset($_SESSION['username'])) {
             $response = OwnerRequestHandler::get($_GET);
@@ -16,21 +16,29 @@ switch ($_SERVER['REQUEST_METHOD']) {
         // read data
         break;
     }
-    case 'POST': {
-        //$postData = json_decode(file_get_contents("php://input"));
+    case 'POST': { // register
+        $postData = json_decode(file_get_contents("php://input"), true);
 
-        $postData = $_POST;
+        //$postData = $_POST;
 
-        $response = OwnerRequestHandler::post($postData);
+        try {
+            $response = OwnerRequestHandler::post($postData);
+        } catch (Exception $exception) {
+            http_response_code(500);
+            $response = [
+                'success' => false,
+                'error' => $exception->getMessage()
+            ];
+        }
         // insert
         break;
     }
-    case 'PUT': {
+    case 'PUT': { // edit owner
         $response = OwnerRequestHandler::update();
         // update
         break;
     }
-    case 'DELETE': {
+    case 'DELETE': { // delete owner profile
         $response = OwnerRequestHandler::delete();
         // delete
         break;

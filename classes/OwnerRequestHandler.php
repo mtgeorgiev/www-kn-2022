@@ -47,7 +47,22 @@ class OwnerRequestHandler {
      * Creates an owner object
      */
     public static function post(array $data): array {
-        return $data;
+
+        // validation -> validate $data
+
+        // insert
+        $connection = (new Db())->getConnection();
+        $statement = $connection->prepare("INSERT INTO `owners` (`username`, `password`, `intro_text`) VALUES (:username, :password, :intro_text)");
+        
+        if ($statement->execute([
+            'username' => $data['username'],
+            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+            'intro_text' => $data['intro_text']
+        ])) {
+            return $data;
+        }
+
+        throw new Exception("Internal server error");
     }
 
     /**

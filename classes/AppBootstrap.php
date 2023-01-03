@@ -9,7 +9,14 @@ class AppBootstrap {
      * Starts the application
      */
     public static function startApp() {
+
+        self::startSession();
+
         self::registerAutoLoader();
+    }
+
+    private static function startSession() {
+        session_start();
     }
 
     private static function registerAutoLoader() {        
