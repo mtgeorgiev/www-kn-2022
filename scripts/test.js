@@ -104,72 +104,72 @@ const sendPostRequestAsFormData = (data) => {
     .then(response => response.json());
 }
 
-const sendLoginRequest = event => {
+const loginMethods = {
+    sendLoginRequest: event => {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    return fetch('./session.php', {
-        method: 'POST',
-        body: new FormData(event.target)
-    })
-    .then(response => response.json())
-    .then(r => {
-        console.log(r);
-        if (r.logged) {
-           document.location.reload();
-        } else {
-            alert('Неуспешно влизане');
-        }
-    });
-}
-
-const showLoginForm = () => {
-
-    const formContainer = document.createElement('div');
-    formContainer.innerHTML =  `
-        <form id="login-form">
-            <div><input type="text" name="username" placeholder="Потребителско име" /></div>
-            <div><input type="password" name="password" /></div>
-            <input type="submit" value="Влез" />
-        </form>`;
-
-    document.getElementById('content').appendChild(formContainer);
-
-    document.getElementById('login-form').addEventListener('submit', sendLoginRequest);
-}
-
-const logout = () => {
-    fetch('session.php', {
-        'method': 'DELETE',
-    })
-    .then(() => {
-
-        const messageContainer = document.createElement('span');
-        messageContainer.innerText = 'Успешно излязохте от системата';
-
-        document.getElementById('content').appendChild(messageContainer);
-
-        window.setTimeout(() => {
+        return fetch('./session.php', {
+            method: 'POST',
+            body: new FormData(event.target)
+        })
+        .then(response => response.json())
+        .then(r => {
+            console.log(r);
+            if (r.logged) {
             document.location.reload();
-        }, 2000);
-    });
-}
-
-const checkLoginStatus = () => {
-    fetch('./session.php')
-        .then(r => r.json())
-        .then(response => {
-            if (response.logged) {
-                document.getElementById('sidebar').innerHTML = `<div>Здравей, <span id="username">${response.username}</span></div>
-                <div><button id="logout">Излез</button></div>`;
-                document.querySelector('#sidebar #logout').addEventListener('click', logout);
             } else {
-                document.getElementById('sidebar').innerHTML = `<button id="login">Влез в системата</button>`;
-                document.querySelector('#sidebar #login').addEventListener('click', showLoginForm);
+                alert('Неуспешно влизане');
             }
         });
+    },
+    showLoginForm: () => {
+
+        const formContainer = document.createElement('div');
+        formContainer.setAttribute('id', 'login-form-wrapper');
+        formContainer.innerHTML =  `
+            <form id="login-form">
+                <div><input type="text" name="username" placeholder="Потребителско име" /></div>
+                <div><input type="password" name="password" /></div>
+                <input type="submit" value="Влез" />
+            </form>`;
+
+        document.getElementById('content').appendChild(formContainer);
+
+        document.getElementById('login-form').addEventListener('submit', loginMethods.sendLoginRequest);
+    },
+    logout: () => {
+        fetch('session.php', {
+            'method': 'DELETE',
+        })
+        .then(() => {
+
+            const messageContainer = document.createElement('span');
+            messageContainer.innerText = 'Успешно излязохте от системата';
+
+            document.getElementById('content').appendChild(messageContainer);
+
+            window.setTimeout(() => {
+                document.location.reload();
+            }, 2000);
+        });
+    },
+    checkLoginStatus: () => {
+        fetch('./session.php')
+            .then(r => r.json())
+            .then(response => {
+                if (response.logged) {
+                    document.getElementById('sidebar').innerHTML = `<div>Здравей, <span id="username">${response.username}</span></div>
+                    <div><button id="logout">Излез</button></div>`;
+                    document.querySelector('#sidebar #logout').addEventListener('click', loginMethods.logout);
+                } else {
+                    document.getElementById('sidebar').innerHTML = `<button id="login">Влез в системата</button>`;
+                    document.querySelector('#sidebar #login').addEventListener('click', loginMethods.showLoginForm);
+                }
+            });
+    }
 }
 
 document.getElementById('see-owners').addEventListener('click', loadOwners);
 
-checkLoginStatus();
+loginMethods.checkLoginStatus();

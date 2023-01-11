@@ -11,7 +11,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $response = OwnerRequestHandler::get($_GET);
         } else {
             http_response_code(401);
-            $response = null;
+            $response = ['authorized' => false];
         }
         // read data
         break;

@@ -64,3 +64,16 @@ nav {
     width: 20%;
     float: left;
 }
+
+#login-form-wrapper {
+    position: absolute;
+    top: 150px;
+    left: 40%;
+    background-color: #d0e2e9;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#login-form-wrapper>form>div {
+    margin-bottom: 10px;
+}
