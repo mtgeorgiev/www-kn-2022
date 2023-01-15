@@ -10,6 +10,16 @@
         <div id="content">
             <button id="see-owners">Виж собствениците на животинки</button>
             <div id="owners-container"></div>
+
+            <form id="file-upload"
+                  method="POST"
+                  action="./testfileupload-db.php"
+                  enctype="multipart/form-data"
+            >
+                <input type="file" name="my-file" accept="image/*"/>
+                <input type="submit" value="Качи файла" />
+            </form>
+            <!--<img src="./files/$filename" />-->
         </div>
         <div id="sidebar"></div>
     </body>

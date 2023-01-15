@@ -25,6 +25,7 @@ class SessionRequestHandler {
         if ($logged) {
 
             $_SESSION['username'] = $username;
+            $_SESSION['user_id'] = $owner['id'];
 
             $response = [
                 'logged' => true,
